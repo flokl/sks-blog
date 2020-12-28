@@ -1,0 +1,21 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title>News</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-list>
+        <ion-card *ngFor="let news_entry of news">
+            <ion-item>
+                <!--<ion-icon name="pin" slot="start"></ion-icon>-->
+                <ion-label>{{news_entry.title}}</ion-label>
+                <ion-button (click)="openNews(news_entry.id)" fill="outline" slot="end">View</ion-button>
+            </ion-item>
+
+            <ion-card-content>
+                {{news_entry.text | slice:0:20}} ...
+            </ion-card-content>
+        </ion-card>
+    </ion-list>
+</ion-content>
