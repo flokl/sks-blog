@@ -1,0 +1,13 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title>Authors</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-card *ngFor="let author of authors;">
+        <ion-item [routerLink]="['/authors', author.id]">
+            {{author.sex === "MALE" ? "Mr." : "Mrs."}} {{author.firstName}} {{author.lastName}}
+        </ion-item>
+    </ion-card>
+</ion-content>

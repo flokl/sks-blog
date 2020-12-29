@@ -1,0 +1,13 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title>Categories</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-card *ngFor="let category of categories;">
+        <ion-item [routerLink]="['/categories', category.id]">
+            {{category.name}}
+        </ion-item>
+    </ion-card>
+</ion-content>

@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {ActivatedRoute} from '@angular/router';
 import {News} from '../../interfaces/news';
+import {NewsCategory} from '../../interfaces/news-category';
+import {Author} from '../../interfaces/author';
 
 @Component({
     selector: 'app-single-news',
@@ -13,9 +15,9 @@ export class SingleNewsPage implements OnInit {
         id: '',
         publicationDate: '',
         text: '',
-        authors: [],
+        authors: [] as Author[],
         title: '',
-        category: null,
+        category: {} as NewsCategory,
         topNews: false
     };
 

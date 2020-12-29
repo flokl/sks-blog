@@ -28,7 +28,7 @@ import lombok.extern.java.Log;
 
 @RestController
 @RequestMapping("/resources/news")
-@CrossOrigin
+//@CrossOrigin // --> already defined in gateway security config
 @Log
 public class NewsResource {
 	@Autowired
@@ -51,11 +51,7 @@ public class NewsResource {
 	@GetMapping("/{id}")
 	public /* ResponseEntity<News> */ News retrieve(@PathVariable long id) {
 		log.info("retrieve() >> id=" + id);
-		
-//		return newsRepository.findById(id)
-//			.map(news -> ResponseEntity.ok(news))
-//			.orElse(ResponseEntity.notFound().build());
-		
+
 		return newsRepository
 				.findById(id)
 				.orElseThrow(() -> new EmptyResultDataAccessException("can't find news with id " + id, 1));
@@ -77,12 +73,14 @@ public class NewsResource {
 	}	
 	
 	@GetMapping
-	public List<News> retrieveAll(@RequestParam("categoryid") Optional<Long> optCategoryId) {
-		log.info("retrieveAll() >> optCategoryId=" + optCategoryId);
+	public List<News> retrieveAll(@RequestParam("categoryid") Optional<Long> optCategoryId, @RequestParam("authorid") Optional<Long> optAuthorId) {
+		log.info("retrieveAll() >> optCategoryId=" + optCategoryId + ", optAuthorId=" + optAuthorId);
 		
 		return optCategoryId
 			.map(categoryId -> newsRepository.findAllByCategoryId(categoryId))
-			.orElse(newsRepository.findAll());
+			.orElse(optAuthorId
+						.map(authorId -> newsRepository.findAllByAuthorsId(authorId))
+						.orElse(newsRepository.findAll()));
 	}
 	
 	@GetMapping("/dto")

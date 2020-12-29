@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {News} from '../../interfaces/news';
-import {Router} from '@angular/router';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
     selector: 'app-news',
@@ -9,17 +9,11 @@ import {Router} from '@angular/router';
     styleUrls: ['./news.page.scss'],
 })
 export class NewsPage implements OnInit {
-    public news: News[] = [];
+    public news: News[] = [] as News[];
 
-    constructor(private httpClient: HttpClient, private router: Router) {}
+    constructor(private httpClient: HttpClient, private activatedRoute: ActivatedRoute) {}
 
     async ngOnInit() {
         this.news = await this.httpClient.get('http://localhost:5555/api/news/resources/news', {}).toPromise() as News[];
-
-        console.log(this.news);
-    }
-
-    async openNews(id: string) {
-        await this.router.navigate(['news', id]);
     }
 }

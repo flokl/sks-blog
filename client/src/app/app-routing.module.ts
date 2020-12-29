@@ -4,16 +4,8 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'folder/Inbox',
+    redirectTo: 'news',
     pathMatch: 'full'
-  },
-  {
-    path: 'news',
-    loadChildren: () => import('./pages/news/news.module').then( m => m.NewsPageModule)
-  },
-  {
-    path: 'folder/:id',
-    loadChildren: () => import('./folder/folder.module').then( m => m.FolderPageModule)
   },
   {
     path: 'news',
@@ -22,7 +14,27 @@ const routes: Routes = [
   {
     path: 'news/:id',
     loadChildren: () => import('./pages/single-news/single-news.module').then( m => m.SingleNewsPageModule)
-  }
+  },
+  {
+    path: 'categories',
+    loadChildren: () => import('./pages/categories/categories.module').then( m => m.CategoriesPageModule)
+  },
+  {
+    path: 'categories/:id',
+    loadChildren: () => import('./pages/single-category/single-category.module').then( m => m.SingleCategoryPageModule)
+  },
+  {
+    path: 'authors',
+    loadChildren: () => import('./pages/authors/authors.module').then( m => m.AuthorsPageModule)
+  },
+  {
+    path: 'authors/:id',
+    loadChildren: () => import('./pages/single-author/single-author.module').then( m => m.SingleAuthorPageModule)
+  },
+  {
+    path: 'create-entry',
+    loadChildren: () => import('./pages/create-entry/create-entry.module').then( m => m.CreateEntryPageModule)
+  },
 ];
 
 @NgModule({

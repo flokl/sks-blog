@@ -1,7 +1,7 @@
 <ion-header>
     <ion-toolbar>
         <ion-row>
-            <ion-back-button default-href="news"></ion-back-button>
+            <ion-back-button [defaultHref]="['news']"></ion-back-button>
             <ion-title>{{news.title}}</ion-title>
         </ion-row>
     </ion-toolbar>
@@ -11,13 +11,20 @@
     <ion-card>
         <ion-card-header>
             <ion-card-title>
-                {{news.title}}, {{news.publicationDate}}
+                {{news.title}} - published {{news.publicationDate}}
             </ion-card-title>
-            <ion-card-subtitle *ngFor="let author of news.authors">
-                {{author.firstName}} {{author.lastName}}
+            <ion-badge style="cursor: pointer;" [routerLink]="['/categories', news.category.id]">{{news.category.name}}</ion-badge>
+            <ion-card-subtitle>
+                Written by:
+                <ng-container *ngFor="let author of news.authors; index as i">
+                    <a [routerLink]="['/authors', author.id]">{{author.lastName}} {{author.firstName}}</a><ng-container *ngIf="i < news.authors.length - 1">, </ng-container>
+                </ng-container>
+                <ng-container *ngIf="news.authors === undefined || news.authors.length === 0">
+                    Anonymous
+                </ng-container>
             </ion-card-subtitle>
         </ion-card-header>
-
+        <hr/>
         <ion-card-content>
             {{news.text}}
         </ion-card-content>
