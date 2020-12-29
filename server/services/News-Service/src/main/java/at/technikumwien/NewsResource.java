@@ -6,11 +6,14 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.stream.messaging.Source;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Order;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.Message;
+import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,7 +36,10 @@ import lombok.extern.java.Log;
 public class NewsResource {
 	@Autowired
 	private NewsRepository newsRepository;
-	
+
+	@Autowired
+	private Source source;
+
 	@PostMapping
 	public ResponseEntity<?> create(@RequestBody News news) {
 		log.info("create() >> news=" + news);
@@ -52,9 +58,19 @@ public class NewsResource {
 	public /* ResponseEntity<News> */ News retrieve(@PathVariable long id) {
 		log.info("retrieve() >> id=" + id);
 
-		return newsRepository
-				.findById(id)
-				.orElseThrow(() -> new EmptyResultDataAccessException("can't find news with id " + id, 1));
+		Optional<News> news = newsRepository.findById(id);
+
+		for (Author author : news.get().getAuthors()) {
+			Message<Author> message = MessageBuilder
+					.withPayload(author)
+					.build();
+
+			source
+					.output()
+					.send(message);
+		}
+
+		return news.orElseThrow(() -> new EmptyResultDataAccessException("can't find news with id " + id, 1));
 	}
 	
 	@PutMapping("/{id}")
