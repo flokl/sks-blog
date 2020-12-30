@@ -22,7 +22,7 @@ spring:
     stream:
       bindings:
         output:
-          destination: bonusservice.author
+          destination: newsservice
           content-type: application/json
       kafka:
         binder:

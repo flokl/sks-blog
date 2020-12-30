@@ -35,6 +35,10 @@ public class Author {
 	@Column(nullable = false)
 	private Double commission;
 
+	public Author(Long id, Sex sex, String firstName, String lastName) {
+		this(id, sex, firstName, lastName, 0.00);
+	}
+
 	public void increaseCommission() {
 		if (this.commission == null)
 			this.commission = 0.00;

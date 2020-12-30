@@ -22,9 +22,9 @@ spring:
     stream:
       bindings:
         input:
-          destination: bonusservice.author
+          destination: newsservice
           content-type: application/json
-          group: bonusservice.author.group1
+          group: newsservice.commission
       kafka:
         binder:
           brokers: localhost:9092

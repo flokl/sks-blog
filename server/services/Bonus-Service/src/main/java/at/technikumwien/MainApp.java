@@ -22,7 +22,7 @@ public class MainApp {
     }
 
     //TODO dev code
-    @Scheduled(fixedDelay = 5000)
+    @Scheduled(fixedDelay = 30000)
     // 00:01 on the 1 day of the month
     //@Scheduled(cron = "1 0 1 * *")
     public void run() {

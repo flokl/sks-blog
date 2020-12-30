@@ -8,12 +8,12 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Log
-public class CommissionConsumer {
+public class AuthorResource {
 
     @Autowired
     private AuthorRepository authorRepository;
 
-    @StreamListener(Sink.INPUT)
+    @StreamListener(value = Sink.INPUT, condition = "headers['TOPIC'] == 'commission'")
     public void handleClick(Author author) {
 
         author = authorRepository.findById(author.getId()).orElse(author);
@@ -21,6 +21,6 @@ public class CommissionConsumer {
 
         authorRepository.save(author);
 
-        log.info("Commission increased for " + author.toString() + " to " + author.getCommission() + "€");
+        log.info("Commission for " + author.toString() + " increased to " + author.getCommission() + "€");
     }
 }
