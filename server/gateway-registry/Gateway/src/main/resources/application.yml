@@ -32,6 +32,7 @@ zuul:
   prefix: /api
   routes:
     newsservice: /news/**
+    statisticservice: /statistics/**
   retryable: true
 
 management:
