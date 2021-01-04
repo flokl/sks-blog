@@ -1,4 +1,4 @@
-package at.technikumwien;
+package at.technikumwien.news;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -15,6 +15,9 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import at.technikumwien.attraction.Attraction;
+import at.technikumwien.author.Author;
+import at.technikumwien.category.Category;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -53,8 +56,12 @@ public class News {
 		inverseJoinColumns = @JoinColumn(name = "authorid")
 	)
 	private List<Author> authors;
+
+	@ManyToOne(cascade = CascadeType.MERGE)
+	@JoinColumn(nullable = false, name = "attractionid") // nullable should be true --> for example info posts do not have any attraction to refer to
+	private Attraction attraction;
 	
-	public News(String title, String text, LocalDate publicationDate, boolean topNews, Category category, List<Author> authors) {
-		this(null, title, text, publicationDate, topNews, category, authors);
+	public News(String title, String text, LocalDate publicationDate, boolean topNews, Category category, List<Author> authors, Attraction attraction) {
+		this(null, title, text, publicationDate, topNews, category, authors, attraction);
 	}
 }

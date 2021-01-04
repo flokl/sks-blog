@@ -1,0 +1,30 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-row>
+      <ion-back-button [defaultHref]="['/attractions']"></ion-back-button>
+      <ion-title>{{attraction.name}}</ion-title>
+    </ion-row>
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card class="ion-float-left" *ngFor="let news_entry of news" style="width: 31%;">
+    <ion-item>
+      <!--<ion-icon name="pin" slot="start"></ion-icon>-->
+      <ion-label>{{news_entry.title}}</ion-label>
+
+      <ion-button [routerLink]="['/news', news_entry.id]" fill="outline" slot="end">View</ion-button>
+    </ion-item>
+
+    <ion-card-content>
+      {{news_entry.text | slice:0:20}} ...
+
+    </ion-card-content>
+    <ion-card-content>
+      <ion-badge style="cursor: pointer; margin-right: 5px;" [routerLink]="['/categories', news_entry.category.id]">{{news_entry.category.name}}</ion-badge>
+      <ion-badge *ngIf="news_entry.attraction.name !== '--blank--'" color="warning" style="cursor: pointer;"
+                 [routerLink]="['/attractions', news_entry.attraction.id]">{{news_entry.attraction.name}}</ion-badge>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

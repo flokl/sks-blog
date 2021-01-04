@@ -13,7 +13,9 @@
             <ion-card-title>
                 {{news.title}} - published {{news.publicationDate}}
             </ion-card-title>
-            <ion-badge style="cursor: pointer;" [routerLink]="['/categories', news.category.id]">{{news.category.name}}</ion-badge>
+            <ion-badge style="cursor: pointer; margin-right: 5px;" [routerLink]="['/categories', news.category.id]">{{news.category.name}}</ion-badge>
+            <ion-badge *ngIf="news.attraction.name !== '--blank--'" color="warning" style="cursor: pointer;"
+                       [routerLink]="['/attractions', news.attraction.id]">{{news.attraction.name}}</ion-badge>
             <ion-card-subtitle>
                 Written by:
                 <ng-container *ngFor="let author of news.authors; index as i">

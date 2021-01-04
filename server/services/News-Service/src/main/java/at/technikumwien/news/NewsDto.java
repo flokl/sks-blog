@@ -1,10 +1,11 @@
-package at.technikumwien;
+package at.technikumwien.news;
 
 import java.time.LocalDate;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import at.technikumwien.author.Author;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.AccessLevel;

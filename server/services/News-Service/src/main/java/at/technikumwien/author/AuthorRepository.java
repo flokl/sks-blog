@@ -1,4 +1,4 @@
-package at.technikumwien;
+package at.technikumwien.author;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

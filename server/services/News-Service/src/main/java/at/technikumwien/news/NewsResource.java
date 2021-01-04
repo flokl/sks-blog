@@ -1,4 +1,4 @@
-package at.technikumwien;
+package at.technikumwien.news;
 
 import java.net.URI;
 import java.util.List;
@@ -11,7 +11,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Order;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,6 +22,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.extern.java.Log;
+
+import javax.swing.text.html.Option;
 
 // see http://localhost:8080/resources/news
 
@@ -73,14 +74,20 @@ public class NewsResource {
 	}	
 	
 	@GetMapping
-	public List<News> retrieveAll(@RequestParam("categoryid") Optional<Long> optCategoryId, @RequestParam("authorid") Optional<Long> optAuthorId) {
+	public List<News> retrieveAll(@RequestParam("categoryid") Optional<Long> optCategoryId,
+								  @RequestParam("authorid") Optional<Long> optAuthorId,
+								  @RequestParam("attractionid") Optional<Long> optAttractionId) {
 		log.info("retrieveAll() >> optCategoryId=" + optCategoryId + ", optAuthorId=" + optAuthorId);
 		
 		return optCategoryId
 			.map(categoryId -> newsRepository.findAllByCategoryId(categoryId))
 			.orElse(optAuthorId
 						.map(authorId -> newsRepository.findAllByAuthorsId(authorId))
-						.orElse(newsRepository.findAll()));
+						.orElse(optAttractionId
+								.map(attractionId -> newsRepository.findAllByAttractionId(attractionId))
+								.orElse(newsRepository.findAll())
+								)
+					);
 	}
 	
 	@GetMapping("/dto")

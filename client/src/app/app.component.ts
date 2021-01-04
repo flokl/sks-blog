@@ -29,11 +29,15 @@ export class AppComponent implements OnInit {
             icon: 'layers'
         },
         {
+            title: 'Attractions',
+            url: '/attractions',
+            icon: 'pin'
+        },
+        {
             title: 'Create Entry',
             url: '/create-entry',
             icon: 'add-circle'
         },
-
     ];
 
     constructor(

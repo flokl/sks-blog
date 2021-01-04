@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {News} from '../../interfaces/news';
 import {NewsCategory} from '../../interfaces/news-category';
 
 @Component({

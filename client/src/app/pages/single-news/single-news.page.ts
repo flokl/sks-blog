@@ -4,6 +4,7 @@ import {ActivatedRoute} from '@angular/router';
 import {News} from '../../interfaces/news';
 import {NewsCategory} from '../../interfaces/news-category';
 import {Author} from '../../interfaces/author';
+import {Attraction} from '../../interfaces/attraction';
 
 @Component({
     selector: 'app-single-news',
@@ -18,8 +19,9 @@ export class SingleNewsPage implements OnInit {
         authors: [] as Author[],
         title: '',
         category: {} as NewsCategory,
-        topNews: false
-    };
+        topNews: false,
+        attraction: {} as Attraction
+    } as News;
 
     constructor(private httpClient: HttpClient, private activatedRoute: ActivatedRoute) {}
 

@@ -1,4 +1,4 @@
-package at.technikumwien;
+package at.technikumwien.category;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

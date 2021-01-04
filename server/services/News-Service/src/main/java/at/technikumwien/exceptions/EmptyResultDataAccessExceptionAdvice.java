@@ -1,4 +1,4 @@
-package at.technikumwien;
+package at.technikumwien.exceptions;
 
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;

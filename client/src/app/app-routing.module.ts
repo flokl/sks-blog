@@ -35,6 +35,14 @@ const routes: Routes = [
     path: 'create-entry',
     loadChildren: () => import('./pages/create-entry/create-entry.module').then( m => m.CreateEntryPageModule)
   },
+  {
+    path: 'attractions',
+    loadChildren: () => import('./pages/attractions/attractions.module').then( m => m.AttractionsPageModule)
+  },
+  {
+    path: 'attractions/:id',
+    loadChildren: () => import('./pages/single-attraction/single-attraction.module').then( m => m.SingleAttractionPageModule)
+  },
 ];
 
 @NgModule({
