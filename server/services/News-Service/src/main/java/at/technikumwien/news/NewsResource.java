@@ -5,12 +5,19 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import at.technikumwien.author.Author;
+import at.technikumwien.category.Category;
+import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.stream.messaging.Source;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Order;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.ResponseEntity;
+import org.springframework.integration.support.MessageBuilder;
+import org.springframework.messaging.Message;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,9 +28,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import lombok.extern.java.Log;
-
-import javax.swing.text.html.Option;
+import java.net.URI;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 // see http://localhost:8080/resources/news
 
@@ -34,7 +42,10 @@ import javax.swing.text.html.Option;
 public class NewsResource {
 	@Autowired
 	private NewsRepository newsRepository;
-	
+
+	@Autowired
+	private Source source;
+
 	@PostMapping
 	public ResponseEntity<?> create(@RequestBody News news) {
 		log.info("create() >> news=" + news);
@@ -53,9 +64,29 @@ public class NewsResource {
 	public /* ResponseEntity<News> */ News retrieve(@PathVariable long id) {
 		log.info("retrieve() >> id=" + id);
 
-		return newsRepository
-				.findById(id)
-				.orElseThrow(() -> new EmptyResultDataAccessException("can't find news with id " + id, 1));
+		Optional<News> news = newsRepository.findById(id);
+
+		for (Author author : news.get().getAuthors()) {
+			Message<Author> message = MessageBuilder
+					.withPayload(author)
+					.setHeader("TOPIC", "commission")
+					.build();
+
+			source
+					.output()
+					.send(message);
+		}
+
+		Message<Category> message = MessageBuilder
+				.withPayload(news.get().getCategory())
+				.setHeader("TOPIC", "statistic")
+				.build();
+
+		source
+				.output()
+				.send(message);
+
+		return news.orElseThrow(() -> new EmptyResultDataAccessException("can't find news with id " + id, 1));
 	}
 	
 	@PutMapping("/{id}")
