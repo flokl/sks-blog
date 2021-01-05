@@ -1,10 +1,5 @@
 package at.technikumwien.news;
 
-import java.net.URI;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
-
 import at.technikumwien.author.Author;
 import at.technikumwien.category.Category;
 import lombok.extern.java.Log;
@@ -17,16 +12,7 @@ import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.integration.support.MessageBuilder;
 import org.springframework.messaging.Message;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.util.List;
@@ -114,10 +100,7 @@ public class NewsResource {
 			.map(categoryId -> newsRepository.findAllByCategoryId(categoryId))
 			.orElse(optAuthorId
 						.map(authorId -> newsRepository.findAllByAuthorsId(authorId))
-						.orElse(optAttractionId
-								.map(attractionId -> newsRepository.findAllByAttractionId(attractionId))
-								.orElse(newsRepository.findAll())
-								)
+						.orElse(newsRepository.findAll())
 					);
 	}
 	

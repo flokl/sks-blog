@@ -1,6 +1,5 @@
 import {NewsCategory} from './news-category';
 import {Author} from './author';
-import {Attraction} from './attraction';
 
 export interface News {
     id: string;
@@ -11,5 +10,4 @@ export interface News {
 
     category: NewsCategory;
     authors: Author[];
-    attraction: Attraction;
 }

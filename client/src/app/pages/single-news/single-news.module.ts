@@ -1,20 +1,21 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {FormsModule} from '@angular/forms';
 
-import { IonicModule } from '@ionic/angular';
+import {IonicModule} from '@ionic/angular';
 
-import { SingleNewsPageRoutingModule } from './single-news-routing.module';
+import {SingleNewsPageRoutingModule} from './single-news-routing.module';
 
-import { SingleNewsPage } from './single-news.page';
+import {SingleNewsPage} from './single-news.page';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    SingleNewsPageRoutingModule
-  ],
-  declarations: [SingleNewsPage]
+    imports: [
+        CommonModule,
+        FormsModule,
+        IonicModule,
+        SingleNewsPageRoutingModule
+    ],
+    declarations: [SingleNewsPage]
 })
-export class SingleNewsPageModule {}
+export class SingleNewsPageModule {
+}

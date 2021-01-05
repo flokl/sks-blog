@@ -1,11 +1,10 @@
 package at.technikumwien.utilities;
 
-import javax.persistence.EntityManager;
-
 import org.springframework.data.jpa.repository.support.JpaEntityInformation;
 import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 import org.springframework.util.Assert;
 
+import javax.persistence.EntityManager;
 import java.util.ArrayList;
 import java.util.List;
 

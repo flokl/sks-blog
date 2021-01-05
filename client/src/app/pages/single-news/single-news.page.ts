@@ -4,7 +4,6 @@ import {ActivatedRoute} from '@angular/router';
 import {News} from '../../interfaces/news';
 import {NewsCategory} from '../../interfaces/news-category';
 import {Author} from '../../interfaces/author';
-import {Attraction} from '../../interfaces/attraction';
 
 @Component({
     selector: 'app-single-news',
@@ -13,17 +12,17 @@ import {Attraction} from '../../interfaces/attraction';
 })
 export class SingleNewsPage implements OnInit {
     public news: News = {
-        id: '',
-        publicationDate: '',
+        id: null,
+        publicationDate: null,
         text: '',
         authors: [] as Author[],
         title: '',
         category: {} as NewsCategory,
         topNews: false,
-        attraction: {} as Attraction
     } as News;
 
-    constructor(private httpClient: HttpClient, private activatedRoute: ActivatedRoute) {}
+    constructor(private httpClient: HttpClient, private activatedRoute: ActivatedRoute) {
+    }
 
     async ngOnInit() {
         const id = this.activatedRoute.snapshot.paramMap.get('id');

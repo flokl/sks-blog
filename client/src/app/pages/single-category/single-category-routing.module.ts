@@ -1,17 +1,18 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
 
-import { SingleCategoryPage } from './single-category.page';
+import {SingleCategoryPage} from './single-category.page';
 
 const routes: Routes = [
-  {
-    path: '',
-    component: SingleCategoryPage
-  }
+    {
+        path: '',
+        component: SingleCategoryPage
+    }
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule],
+    imports: [RouterModule.forChild(routes)],
+    exports: [RouterModule],
 })
-export class SingleCategoryPageRoutingModule {}
+export class SingleCategoryPageRoutingModule {
+}

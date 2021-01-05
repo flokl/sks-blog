@@ -9,7 +9,7 @@
 </ion-header>
 
 <ion-content>
-    <ion-card class="ion-float-left" *ngFor="let news_entry of news" style="width: 31%;">
+    <ion-card *ngFor="let news_entry of news" class="ion-float-left" style="width: 31%;">
         <ion-item>
             <!--<ion-icon name="pin" slot="start"></ion-icon>-->
             <ion-label>{{news_entry.title}}</ion-label>
@@ -22,9 +22,8 @@
 
         </ion-card-content>
         <ion-card-content>
-            <ion-badge style="cursor: pointer; margin-right: 5px;" [routerLink]="['/categories', news_entry.category.id]">{{news_entry.category.name}}</ion-badge>
-            <ion-badge *ngIf="news_entry.attraction.name !== '--blank--'" color="warning" style="cursor: pointer;"
-                       [routerLink]="['/attractions', news_entry.attraction.id]">{{news_entry.attraction.name}}</ion-badge>
+            <ion-badge [routerLink]="['/categories', news_entry.category.id]"
+                       style="cursor: pointer; margin-right: 5px;">{{news_entry.category.name}}</ion-badge>
         </ion-card-content>
     </ion-card>
 </ion-content>

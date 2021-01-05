@@ -1,17 +1,18 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
 
-import { CreateEntryPage } from './create-entry.page';
+import {CreateEntryPage} from './create-entry.page';
 
 const routes: Routes = [
-  {
-    path: '',
-    component: CreateEntryPage
-  }
+    {
+        path: '',
+        component: CreateEntryPage
+    }
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule],
+    imports: [RouterModule.forChild(routes)],
+    exports: [RouterModule],
 })
-export class CreateEntryPageRoutingModule {}
+export class CreateEntryPageRoutingModule {
+}

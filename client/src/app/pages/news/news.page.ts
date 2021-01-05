@@ -11,7 +11,8 @@ import {ActivatedRoute} from '@angular/router';
 export class NewsPage implements OnInit {
     public news: News[] = [] as News[];
 
-    constructor(private httpClient: HttpClient, private activatedRoute: ActivatedRoute) {}
+    constructor(private httpClient: HttpClient, private activatedRoute: ActivatedRoute) {
+    }
 
     async ngOnInit() {
         this.news = await this.httpClient.get('http://localhost:5555/api/news/resources/news', {}).toPromise() as News[];

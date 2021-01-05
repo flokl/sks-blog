@@ -6,12 +6,12 @@
 
 <ion-content class="ion-padding ion-align-items-center ion-justify-content-center">
 
-    <form [noValidate]="false" (submit)="createEntry();">
+    <form (submit)="createEntry();" [noValidate]="false">
         <ion-item>
             <ion-label>Author</ion-label>
-            <ion-select [(ngModel)]="news.authors" [ngModelOptions]="{standalone: true}" multiple="true"
-                        *ngIf="authors.length > 0" interface="popover" [value]="authors[0]" okText="Okay"
-                        cancelText="Dismiss" [compareWith]="compareWithAuthor">
+            <ion-select *ngIf="authors.length > 0" [(ngModel)]="news.authors" [compareWith]="compareWithAuthor"
+                        [ngModelOptions]="{standalone: true}" [value]="authors[0]" cancelText="Dismiss" interface="popover"
+                        multiple="true" okText="Okay">
                 <ng-container *ngFor="let author of authors;">
                     <ion-select-option
                             [value]="author">{{author.sex === "MALE" ? "Mr." : "Mrs."}} {{author.firstName}} {{author.lastName}}</ion-select-option>
@@ -20,22 +20,10 @@
         </ion-item>
         <br>
         <ion-item>
-            <ion-label>Attraction</ion-label>
-            <ion-select [(ngModel)]="news.attraction" [ngModelOptions]="{standalone: true}"
-                        *ngIf="attractions.length > 0" interface="popover" [value]="attractions[0]" okText="Okay"
-                        cancelText="Dismiss" [compareWith]="compareWithAttraction">
-                <ng-container *ngFor="let attraction of attractions;">
-                    <ion-select-option *ngIf="attraction.name !== '--blank--'"
-                                       [value]="attraction">{{attraction.name}}</ion-select-option>
-                </ng-container>
-            </ion-select>
-        </ion-item>
-        <br>
-        <ion-item>
             <ion-label>Category</ion-label>
-            <ion-select [(ngModel)]="news.category" [ngModelOptions]="{standalone: true}" *ngIf="categories.length > 0"
-                        interface="popover" [value]="categories[0]" okText="Okay" cancelText="Dismiss"
-                        [compareWith]="compareWithCategory">
+            <ion-select *ngIf="categories.length > 0" [(ngModel)]="news.category" [compareWith]="compareWithCategory"
+                        [ngModelOptions]="{standalone: true}" [value]="categories[0]" cancelText="Dismiss" interface="popover"
+                        okText="Okay">
                 <ng-container *ngFor="let category of categories;">
                     <ion-select-option [value]="category">{{category.name}}</ion-select-option>
                 </ng-container>
@@ -54,8 +42,8 @@
 
 
         <br><br>
-        <ion-button expand="block" class="ion-align-self-center" type="submit">
-            <ion-icon slot="end" name="send"></ion-icon>
+        <ion-button class="ion-align-self-center" expand="block" type="submit">
+            <ion-icon name="send" slot="end"></ion-icon>
             Submit
         </ion-button>
     </form>

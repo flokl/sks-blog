@@ -1,17 +1,18 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
 
-import { SingleNewsPage } from './single-news.page';
+import {SingleNewsPage} from './single-news.page';
 
 const routes: Routes = [
-  {
-    path: '',
-    component: SingleNewsPage
-  }
+    {
+        path: '',
+        component: SingleNewsPage
+    }
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule],
+    imports: [RouterModule.forChild(routes)],
+    exports: [RouterModule],
 })
-export class SingleNewsPageRoutingModule {}
+export class SingleNewsPageRoutingModule {
+}

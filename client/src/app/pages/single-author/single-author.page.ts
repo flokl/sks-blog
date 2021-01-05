@@ -13,7 +13,8 @@ export class SingleAuthorPage implements OnInit {
     public news: News[] = [];
     public author: Author = {id: '', sex: '', lastName: '', firstName: ''};
 
-    constructor(private activatedRoute: ActivatedRoute, private httpClient: HttpClient) {}
+    constructor(private activatedRoute: ActivatedRoute, private httpClient: HttpClient) {
+    }
 
     async ngOnInit() {
         const authorId = this.activatedRoute.snapshot.paramMap.get('id');

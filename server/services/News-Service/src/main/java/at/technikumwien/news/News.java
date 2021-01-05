@@ -1,26 +1,14 @@
 package at.technikumwien.news;
 
-import java.time.LocalDate;
-import java.util.List;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-
-import at.technikumwien.attraction.Attraction;
 import at.technikumwien.author.Author;
 import at.technikumwien.category.Category;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
+import java.time.LocalDate;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -57,11 +45,7 @@ public class News {
 	)
 	private List<Author> authors;
 
-	@ManyToOne(cascade = CascadeType.MERGE)
-	@JoinColumn(nullable = false, name = "attractionid") // nullable should be true --> for example info posts do not have any attraction to refer to
-	private Attraction attraction;
-	
-	public News(String title, String text, LocalDate publicationDate, boolean topNews, Category category, List<Author> authors, Attraction attraction) {
-		this(null, title, text, publicationDate, topNews, category, authors, attraction);
+	public News(String title, String text, LocalDate publicationDate, boolean topNews, Category category, List<Author> authors) {
+		this(null, title, text, publicationDate, topNews, category, authors);
 	}
 }
