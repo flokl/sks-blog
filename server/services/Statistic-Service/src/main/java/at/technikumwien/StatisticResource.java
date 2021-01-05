@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/statistics/categories")
+@RequestMapping("/resources/categories")
 @Component
 @Log
 public class StatisticResource {

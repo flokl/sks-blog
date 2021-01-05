@@ -6,5 +6,5 @@ source ../setEnvironment.sh
 
 bin/kafka-console-consumer.sh \
 	--bootstrap-server localhost:$PORT_KAFKA \
-	--topic newsletter.readers \
+	--topic newsservice \
 	--from-beginning

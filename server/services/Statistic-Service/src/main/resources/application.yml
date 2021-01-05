@@ -12,7 +12,7 @@ spring:
   jpa:
     generate-ddl: true
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update # update schema if necessary --> switch to create-drop if you want to delete database data after session
       naming:
         implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
