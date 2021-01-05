@@ -1,8 +1,13 @@
 package at.technikumwien;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Data
 @NoArgsConstructor
@@ -11,26 +16,9 @@ import javax.persistence.*;
 @Entity
 @Table(name = "t_category")
 public class Category {
-	@Id
-	private Long id;
-	
-	@Column(nullable = false, length = 50)
-	private String name;
+    @Id
+    private Long id;
 
-	@Setter(value= AccessLevel.NONE)
-	@Column(nullable = false)
-	private Integer viewCount;
-	
-//	@OneToMany(mappedBy = "category")
-//	private List<News> newsList;
-	
-	public Category(Long id, String name) {
-		this(id, name, 0);
-	}
-
-	public void increaseViewCount() {
-		if (this.viewCount == null)
-			this.viewCount = 0;
-		this.viewCount++;
-	}
+    @Column(nullable = false, length = 50)
+    private String name;
 }

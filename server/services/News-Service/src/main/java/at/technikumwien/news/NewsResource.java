@@ -52,25 +52,28 @@ public class NewsResource {
 
 		Optional<News> news = newsRepository.findById(id);
 
-		for (Author author : news.get().getAuthors()) {
-			Message<Author> message = MessageBuilder
-					.withPayload(author)
-					.setHeader("TOPIC", "commission")
+		if (news.isPresent()) {
+
+			for (Author author : news.get().getAuthors()) {
+				Message<Author> message = MessageBuilder
+						.withPayload(author)
+						.setHeader("TOPIC", "commission")
+						.build();
+
+				source
+						.output()
+						.send(message);
+			}
+
+			Message<Category> message = MessageBuilder
+					.withPayload(news.get().getCategory())
+					.setHeader("TOPIC", "statistic")
 					.build();
 
 			source
 					.output()
 					.send(message);
 		}
-
-		Message<Category> message = MessageBuilder
-				.withPayload(news.get().getCategory())
-				.setHeader("TOPIC", "statistic")
-				.build();
-
-		source
-				.output()
-				.send(message);
 
 		return news.orElseThrow(() -> new EmptyResultDataAccessException("can't find news with id " + id, 1));
 	}
