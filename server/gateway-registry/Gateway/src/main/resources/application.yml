@@ -33,7 +33,6 @@ zuul:
   routes:
     newsservice: /news/**
     statisticservice: /statistics/**
-    bonusservice: /bonus/**
   retryable: true
 
 management:
