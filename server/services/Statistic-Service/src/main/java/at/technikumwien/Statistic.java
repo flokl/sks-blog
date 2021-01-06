@@ -15,13 +15,22 @@ import java.sql.Date;
 @Entity
 @Table(name = "t_statistic")
 
+/*@NamedQuery(
+        name = "Statistic.findStatisticByCategoryId",
+        query = "SELECT new Statistic(CAST(0 AS long), s.category, CAST(CONCAT(YEAR(s.date), '-', MONTH(s.date), '-', '01') AS date),  SUM(s.viewCount)) " +
+                "FROM Statistic s " +
+                "WHERE s.category.id = :categoryid " +
+                "GROUP BY s.category.id, MONTH(s.date), YEAR(s.date)"
+)*/
+
 @NamedQuery(
         name = "Statistic.findStatisticByCategoryId",
         query = "SELECT new Statistic(CAST(0 AS long), s.category, CAST(CONCAT(YEAR(s.date), '-', MONTH(s.date), '-', '01') AS date), SUM(s.viewCount)) " +
                 "FROM Statistic s " +
                 "WHERE s.category.id = :categoryid " +
-                "GROUP BY s.category.id, MONTH(s.date), YEAR(s.date)"
+                "GROUP BY s.category.id, CONCAT(YEAR(s.date), '-', MONTH(s.date), '-', '01')"
 )
+
 @NamedQuery(
         name = "Statistic.findSumByCategoryId",
         query = "SELECT SUM(s.viewCount) " +
