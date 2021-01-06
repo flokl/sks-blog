@@ -10,7 +10,8 @@
         <ion-item>
             <ion-label>Author</ion-label>
             <ion-select *ngIf="authors.length > 0" [(ngModel)]="news.authors" [compareWith]="compareWithAuthor"
-                        [ngModelOptions]="{standalone: true}" [value]="authors[0]" cancelText="Dismiss" interface="popover"
+                        [ngModelOptions]="{standalone: true}" [value]="authors[0]" cancelText="Dismiss"
+                        interface="popover"
                         multiple="true" okText="Okay">
                 <ng-container *ngFor="let author of authors;">
                     <ion-select-option
@@ -22,7 +23,8 @@
         <ion-item>
             <ion-label>Category</ion-label>
             <ion-select *ngIf="categories.length > 0" [(ngModel)]="news.category" [compareWith]="compareWithCategory"
-                        [ngModelOptions]="{standalone: true}" [value]="categories[0]" cancelText="Dismiss" interface="popover"
+                        [ngModelOptions]="{standalone: true}" [value]="categories[0]" cancelText="Dismiss"
+                        interface="popover"
                         okText="Okay">
                 <ng-container *ngFor="let category of categories;">
                     <ion-select-option [value]="category">{{category.name}}</ion-select-option>

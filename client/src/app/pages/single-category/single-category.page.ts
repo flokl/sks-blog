@@ -19,11 +19,11 @@ export class SingleCategoryPage implements OnInit {
     async ngOnInit() {
         const categoryId = this.activatedRoute.snapshot.paramMap.get('id');
 
-        this.category = await this.httpClient.get('http://localhost:5555/api/news/resources/categories/' + categoryId, {})
-            .toPromise() as NewsCategory;
+        this.category = await this.httpClient.get<NewsCategory>('http://localhost:5555/api/news/resources/categories/' + categoryId,
+            {responseType: 'json', headers: {Accept: 'application/json'}}).toPromise();
 
-        this.news = await this.httpClient.get('http://localhost:5555/api/news/resources/news/?categoryid=' + categoryId, {})
-            .toPromise() as News[];
+        this.news = await this.httpClient.get<News[]>('http://localhost:5555/api/news/resources/news/?categoryid=' + categoryId,
+            {responseType: 'json', headers: {Accept: 'application/json'}}).toPromise();
     }
 
 }

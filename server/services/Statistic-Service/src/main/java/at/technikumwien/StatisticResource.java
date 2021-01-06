@@ -12,6 +12,8 @@ import java.time.Month;
 import java.util.List;
 import java.util.Optional;
 
+// see http://localhost:5555/api/statistics/resources/categories
+
 @RestController
 @RequestMapping("/resources/categories")
 @Component

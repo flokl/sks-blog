@@ -29,6 +29,11 @@ export class AppComponent implements OnInit {
             icon: 'layers'
         },
         {
+            title: 'Statistics',
+            url: '/statistics',
+            icon: 'analytics'
+        },
+        {
             title: 'Create Entry',
             url: '/create-entry',
             icon: 'add-circle'

@@ -27,11 +27,11 @@ export class CreateEntryPage implements OnInit {
     }
 
     async ngOnInit() {
-        this.authors = await this.httpClient.get('http://localhost:5555/api/news/resources/authors', {})
-            .toPromise() as Author[];
+        this.authors = await this.httpClient.get<Author[]>('http://localhost:5555/api/news/resources/authors',
+            {responseType: 'json', headers: {Accept: 'application/json'}}).toPromise();
 
-        this.categories = await this.httpClient.get('http://localhost:5555/api/news/resources/categories', {})
-            .toPromise() as NewsCategory[];
+        this.categories = await this.httpClient.get<NewsCategory[]>('http://localhost:5555/api/news/resources/categories',
+            {responseType: 'json', headers: {Accept: 'application/json'}}).toPromise();
     }
 
     async createEntry() {
@@ -39,7 +39,8 @@ export class CreateEntryPage implements OnInit {
 
         console.log('entry sent to server: ', this.news);
 
-        const response = await this.httpClient.post('http://localhost:5555/api/news/resources/news', this.news, {}).toPromise();
+        const response = await this.httpClient.post('http://localhost:5555/api/news/resources/news', this.news,
+            {responseType: 'json', headers: {Accept: 'application/json'}}).toPromise();
         console.log('response: ', response);
     }
 

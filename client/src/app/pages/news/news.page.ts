@@ -15,6 +15,7 @@ export class NewsPage implements OnInit {
     }
 
     async ngOnInit() {
-        this.news = await this.httpClient.get('http://localhost:5555/api/news/resources/news', {}).toPromise() as News[];
+        this.news = await this.httpClient.get<News[]>('http://localhost:5555/api/news/resources/news',
+            {responseType: 'json', headers: {Accept: 'application/json'}}).toPromise();
     }
 }

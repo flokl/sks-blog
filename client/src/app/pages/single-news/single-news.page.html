@@ -19,7 +19,7 @@
                 Written by:
                 <ng-container *ngFor="let author of news.authors; index as i">
                     <a [routerLink]="['/authors', author.id]">{{author.lastName}} {{author.firstName}}</a>
-                    <ng-container *ngIf="i < news.authors.length - 1">, </ng-container>
+                    <ng-container *ngIf="i < news.authors.length - 1">,</ng-container>
                 </ng-container>
                 <ng-container *ngIf="news.authors === undefined || news.authors.length === 0">
                     Anonymous

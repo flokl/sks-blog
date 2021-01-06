@@ -26,7 +26,8 @@ export class SingleNewsPage implements OnInit {
 
     async ngOnInit() {
         const id = this.activatedRoute.snapshot.paramMap.get('id');
-        this.news = await this.httpClient.get('http://localhost:5555/api/news/resources/news/' + id, {}).toPromise() as News;
+        this.news = await this.httpClient.get<News>('http://localhost:5555/api/news/resources/news/' + id,
+            {responseType: 'json', headers: {Accept: 'application/json'}}).toPromise();
     }
 
 }

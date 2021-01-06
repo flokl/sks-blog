@@ -14,7 +14,8 @@ export class AuthorsPage implements OnInit {
     }
 
     async ngOnInit() {
-        this.authors = await this.httpClient.get('http://localhost:5555/api/news/resources/authors', {}).toPromise() as Author[];
+        this.authors = await this.httpClient.get<Author[]>('http://localhost:5555/api/news/resources/authors',
+            {responseType: 'json', headers: {Accept: 'application/json'}}).toPromise();
     }
 
 }

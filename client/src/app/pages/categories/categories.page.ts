@@ -14,8 +14,8 @@ export class CategoriesPage implements OnInit {
     }
 
     async ngOnInit() {
-        this.categories = await this.httpClient.get('http://localhost:5555/api/news/resources/categories', {})
-            .toPromise() as NewsCategory[];
+        this.categories = await this.httpClient.get<NewsCategory[]>('http://localhost:5555/api/news/resources/categories',
+            {responseType: 'json', headers: {Accept: 'application/json'}}).toPromise();
     }
 
 }

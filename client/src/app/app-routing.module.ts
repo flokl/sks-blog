@@ -35,6 +35,10 @@ const routes: Routes = [
     path: 'create-entry',
     loadChildren: () => import('./pages/create-entry/create-entry.module').then( m => m.CreateEntryPageModule)
   },
+  {
+    path: 'statistics',
+    loadChildren: () => import('./pages/statistics/statistics.module').then( m => m.StatisticsPageModule)
+  },
 ];
 
 @NgModule({
