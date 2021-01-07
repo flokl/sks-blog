@@ -18,7 +18,7 @@ import java.util.List;
 
 @Configuration
 public class DBInitializer {
-    private int counter = 1;
+    private boolean alreadyInitialized = false;
 
     @Autowired
     private NewsRepository newsRepository;
@@ -32,7 +32,7 @@ public class DBInitializer {
     @Transactional
     @EventListener(ApplicationReadyEvent.class)
     public void handleApplicationReady() {
-        if (counter == 1) { // needed because kafka fires the same event twice
+        if (!alreadyInitialized) { // needed because kafka fires the same event twice
             // create and save data begin ================================================
             // category
 
@@ -94,7 +94,7 @@ public class DBInitializer {
                     null
             );
 
-            News stephansdom_firstEntry = new News(
+            News newsStephandsdom = new News(
                     "Neues über den Stephansdom",
                     "Der Stephansdom (eigentlich Dom- und Metropolitankirche zu St. Stephan und allen Heiligen)" +
                             " am Wiener Stephansplatz (Bezirk Innere Stadt) ist seit 1365 Domkirche" +
@@ -109,17 +109,48 @@ public class DBInitializer {
                     List.of(markus)
             );
 
+            News newsGroßglockner = new News(
+                    "Neues über den Stephansdom",
+                    "Der Stephansdom (eigentlich Dom- und Metropolitankirche zu St. Stephan und allen Heiligen)" +
+                            " am Wiener Stephansplatz (Bezirk Innere Stadt) ist seit 1365 Domkirche" +
+                            " (Sitz eines Domkapitels), seit 1469/1479 Kathedrale (Bischofssitz) und seit 1723" +
+                            " Metropolitankirche des Erzbischofs von Wien. Der von den Wienern auch kurz Steffl" +
+                            " genannte römisch-katholische Dom gilt als Wahrzeichen Wiens und wird mitunter auch" +
+                            " als österreichisches Nationalheiligtum bezeichnet. Namensgeber ist der heilige Stephanus," +
+                            " der als erster christlicher Märtyrer gilt. Das zweite Patrozinium ist Allerheiligen.",
+                    LocalDate.of(2021, 1, 3),
+                    true,
+                    grossglockner,
+                    List.of(lukas, florian)
+            );
+
+            News newsKrimmlerWasserfaelle = new News(
+                    "Das Dach der Welt",
+                    "Die Krimmler Wasserfälle sind mit einer gesamten Fallhöhe von 385 m die höchsten " +
+                            "Wasserfälle Österreichs. Sie befinden sich am Rand des Ortes Krimml (Salzburg) " +
+                            "im Nationalpark Hohe Tauern. Gebildet werden sie durch die Krimmler Ache, die am " +
+                            "Ende des hoch gelegenen Krimmler Achentals in drei Fallstufen hinunterstürzt.",
+                    LocalDate.of(2021, 1, 3),
+                    true,
+                    krimmlerWasserfalle,
+                    List.of(lukas, florian)
+            );
+
+
+
             List<News> news = newsRepository.saveAll(List.of(
-                    firstEntry, portalOnline, stephansdom_firstEntry
+                    firstEntry, portalOnline, newsStephandsdom, newsGroßglockner, newsKrimmlerWasserfaelle
             ));
 
             // necessary to get id from created object
             firstEntry = news.get(0);
             portalOnline = news.get(1);
-            stephansdom_firstEntry = news.get(2);
+            newsStephandsdom = news.get(2);
+            newsGroßglockner = news.get(3);
+            newsKrimmlerWasserfaelle = news.get(4);
         }
 
-        System.out.println("counter: " + counter);
-        counter += 1;
+        System.out.println("DBInitializer already intialized: " + this.alreadyInitialized);
+        this.alreadyInitialized = true;
     }
 }

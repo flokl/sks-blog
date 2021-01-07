@@ -1,14 +1,10 @@
 package at.technikumwien;
 
 import lombok.*;
-import org.checkerframework.common.aliasing.qual.Unique;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Primary;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.Currency;
 
 @Data
 @NoArgsConstructor

@@ -5,7 +5,21 @@
 </ion-header>
 
 <ion-content class="ion-padding">
-    <ion-segment [value]="categories[0]" (ionChange)="segmentChanged($event)">
+    <ion-list>
+        <ion-item>
+            <ion-label>Specific Month?</ion-label>
+            <ion-toggle (ionChange)="changeStatistic()" [(ngModel)]="useMonthlyStatistic"></ion-toggle>
+        </ion-item>
+        <ion-item [hidden]="!useMonthlyStatistic">
+            <ion-label position="stacked">Choose Month and Year</ion-label>
+            <ion-datetime (ionChange)="changeStatistic()" [(ngModel)]="currentDate" [value]="currentDate"
+                          displayFormat="MMMM YY" max="2022-12-01" min="2020-12-01"></ion-datetime>
+        </ion-item>
+    </ion-list>
+
+    <br>
+    <h5>Filter by categories:</h5>
+    <ion-segment (ionChange)="segmentChanged($event)" [value]="categories[0]">
         <ion-segment-button *ngFor="let category of categories;" [value]="category">
             <ion-label>{{category.name}}</ion-label>
         </ion-segment-button>

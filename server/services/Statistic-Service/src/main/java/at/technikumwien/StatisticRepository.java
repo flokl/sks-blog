@@ -2,16 +2,14 @@ package at.technikumwien;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.sql.Date;
 import java.util.List;
+import java.util.Optional;
 
 public interface StatisticRepository extends JpaRepository<Statistic, Long> {
-    List<Statistic> findStatisticByCategoryId(long categoryid);
+    Optional<Statistic> findByCategoryIdAndDate(long categoryid, Date date);
 
-    Long findSumByCategoryId(long categoryid);
+    List<Statistic> findAllByCategoryIdOrderByDate(long categoryId);
 
-    List<Statistic> findAllByMonthYear(int month, int year);
-
-    List<Statistic> findCurrentByCategoryId(long categoryid);
-
-    List<Statistic> findAllByCategoryId(long categoryId);
+    List<Statistic> findAllByCategoryIdForMonthAndYear(long categoryid, int month, int year);
 }

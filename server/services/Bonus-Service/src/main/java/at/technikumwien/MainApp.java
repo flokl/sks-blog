@@ -3,9 +3,9 @@ package at.technikumwien;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.cloud.stream.messaging.Sink;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 
@@ -28,7 +28,7 @@ public class MainApp {
     public void run() {
         for (Author author : authorRepository.findAll()) {
             if (author.getCommission() > 0) {
-                System.out.println(author.getFirstName() + " " + author.getLastName() + " got payed " + author.getCommission() + "€.");
+                System.out.println(author.getFirstName() + " " + author.getLastName() + " got paid " + author.getCommission() + "€.");
                 author.resetCommission();
                 authorRepository.save(author);
             }

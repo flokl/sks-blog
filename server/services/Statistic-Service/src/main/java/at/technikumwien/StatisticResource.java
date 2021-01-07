@@ -4,11 +4,10 @@ import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.stream.annotation.StreamListener;
 import org.springframework.cloud.stream.messaging.Sink;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.Month;
+import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,47 +22,32 @@ public class StatisticResource {
     private StatisticRepository statisticRepository;
 
     @GetMapping(value = "/{categoryid}")
-    public List<Statistic> getCategoryViews(@PathVariable long categoryid) {
-        log.info("getCategoryViews => " + categoryid);
-        return Optional.ofNullable(statisticRepository.findAllByCategoryId(categoryid)).orElseThrow(() ->
-                new EmptyResultDataAccessException("can't find statistics for category with id " + categoryid, 1));
-    }
+    public List<Statistic> getCategoryViews(@PathVariable long categoryid,
+                                            @RequestParam("month") Optional<Integer> month,
+                                            @RequestParam("year") Optional<Integer> year) {
 
-    @GetMapping(value = "/total/{categoryid}")
-    public Long getTotalCategoryViews(@PathVariable long categoryid) {
-        log.info("getTotalCategoryViews => " + categoryid);
-        return Optional.ofNullable(statisticRepository.findSumByCategoryId(categoryid)).orElseThrow(() ->
-                new EmptyResultDataAccessException("can't find statistic for category with id " + categoryid, 1));
+        if (month.isPresent() && year.isPresent()) {
+            log.info("getCategoryViews => " + categoryid + ", month: " + month.get() + ", year: " + year);
+            return statisticRepository.findAllByCategoryIdForMonthAndYear(categoryid, month.get(), year.get());
+        } else {
+            log.info("getCategoryViews => " + categoryid);
+            return statisticRepository.findAllByCategoryIdOrderByDate(categoryid);
+        }
     }
 
     @GetMapping
-    public List<Statistic> getMonthlyViews(@RequestParam("month") Optional<Integer> month, @RequestParam("year") Optional<Integer> year) {
-        log.info("getMonthlyViews => " + month + "." + year);
-
-        if (month.isPresent() && year.isPresent()) {
-            return statisticRepository.findAllByMonthYear(month.get(), year.get());
-        } else {
-            return statisticRepository.findAll();
-        }
-
-        /*return Optional.ofNullable(statisticRepository.findAllByMonthYear(month, year)).orElseThrow(() ->
-                new EmptyResultDataAccessException("can't find statistic for " + Month.of(month) + " " + year, 1));*/
-    }
-
-    private Optional<Statistic> getCurrentMonthViews(long categoryid) {
-        log.info("getCurrentMonthViews => " + categoryid);
-        return statisticRepository.findCurrentByCategoryId(categoryid).isEmpty() ?
-                Optional.empty() : Optional.ofNullable(statisticRepository.findCurrentByCategoryId(categoryid).get(0));
+    public List<Statistic> retrieveAll() {
+        log.info("retrieveAll()");
+        return statisticRepository.findAll();
     }
 
     @StreamListener(value = Sink.INPUT, condition = "headers['TOPIC'] == 'statistic'")
     public void handleClick(Category category) {
-
-        Statistic currentStatistic = getCurrentMonthViews(category.getId())
+        Statistic currentStatistic = statisticRepository.findByCategoryIdAndDate(category.getId(),
+                new Date(System.currentTimeMillis()))
                 .orElse(new Statistic(category));
 
         currentStatistic.increaseViewCount();
-        System.out.println(currentStatistic);
         statisticRepository.save(currentStatistic);
 
         log.info("Category count for " + currentStatistic.getCategory().getName() +
