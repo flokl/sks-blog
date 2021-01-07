@@ -4,6 +4,25 @@
     </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="ion-padding">
+    <ion-segment [value]="categories[0]" (ionChange)="segmentChanged($event)">
+        <ion-segment-button *ngFor="let category of categories;" [value]="category">
+            <ion-label>{{category.name}}</ion-label>
+        </ion-segment-button>
+    </ion-segment>
 
+    <table>
+        <tr>
+            <th>Datum</th>
+            <th>Views</th>
+        </tr>
+        <tr *ngFor="let stat of allStats;">
+            <td>{{stat.date}}</td>
+            <td>{{stat.viewCount}}</td>
+        </tr>
+        <tr>
+            <td>Summe:</td>
+            <td>{{sumOfViews}}</td>
+        </tr>
+    </table>
 </ion-content>

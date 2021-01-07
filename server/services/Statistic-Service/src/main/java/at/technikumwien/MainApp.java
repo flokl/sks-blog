@@ -7,7 +7,7 @@ import org.springframework.cloud.stream.messaging.Sink;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
-@EnableJpaRepositories
+@EnableJpaRepositories(repositoryBaseClass = CustomJpaRepository.class)
 @EnableBinding(Sink.class)
 public class MainApp {
     public static void main(String[] args) {

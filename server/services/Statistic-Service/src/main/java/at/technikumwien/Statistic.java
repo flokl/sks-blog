@@ -58,7 +58,7 @@ public class Statistic {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(nullable = false, name = "categoryid")
     private Category category;
 

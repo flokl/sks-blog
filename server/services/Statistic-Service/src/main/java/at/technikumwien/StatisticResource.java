@@ -25,7 +25,7 @@ public class StatisticResource {
     @GetMapping(value = "/{categoryid}")
     public List<Statistic> getCategoryViews(@PathVariable long categoryid) {
         log.info("getCategoryViews => " + categoryid);
-        return Optional.ofNullable(statisticRepository.findStatisticByCategoryId(categoryid)).orElseThrow(() ->
+        return Optional.ofNullable(statisticRepository.findAllByCategoryId(categoryid)).orElseThrow(() ->
                 new EmptyResultDataAccessException("can't find statistics for category with id " + categoryid, 1));
     }
 
@@ -37,10 +37,17 @@ public class StatisticResource {
     }
 
     @GetMapping
-    public List<Statistic> getMonthlyViews(@RequestParam("month") int month, @RequestParam("year") int year) {
+    public List<Statistic> getMonthlyViews(@RequestParam("month") Optional<Integer> month, @RequestParam("year") Optional<Integer> year) {
         log.info("getMonthlyViews => " + month + "." + year);
-        return Optional.ofNullable(statisticRepository.findAllByMonthYear(month, year)).orElseThrow(() ->
-                new EmptyResultDataAccessException("can't find statistic for " + Month.of(month) + " " + year, 1));
+
+        if (month.isPresent() && year.isPresent()) {
+            return statisticRepository.findAllByMonthYear(month.get(), year.get());
+        } else {
+            return statisticRepository.findAll();
+        }
+
+        /*return Optional.ofNullable(statisticRepository.findAllByMonthYear(month, year)).orElseThrow(() ->
+                new EmptyResultDataAccessException("can't find statistic for " + Month.of(month) + " " + year, 1));*/
     }
 
     private Optional<Statistic> getCurrentMonthViews(long categoryid) {
@@ -56,6 +63,7 @@ public class StatisticResource {
                 .orElse(new Statistic(category));
 
         currentStatistic.increaseViewCount();
+        System.out.println(currentStatistic);
         statisticRepository.save(currentStatistic);
 
         log.info("Category count for " + currentStatistic.getCategory().getName() +

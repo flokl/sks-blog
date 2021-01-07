@@ -12,4 +12,6 @@ public interface StatisticRepository extends JpaRepository<Statistic, Long> {
     List<Statistic> findAllByMonthYear(int month, int year);
 
     List<Statistic> findCurrentByCategoryId(long categoryid);
+
+    List<Statistic> findAllByCategoryId(long categoryId);
 }
